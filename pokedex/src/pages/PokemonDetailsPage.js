@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import './StyleReset/ResetCss.css'
 import { useHistory } from 'react-router-dom';
 import { goToHomePage } from '../routes/coordinator';
 import { goToPokedexPage } from '../routes/coordinator';
@@ -9,8 +10,22 @@ const FullPage = styled.div`
     height: 100vh;
     display: flex;
     justify-content: center;
+`
+
+const Header = styled.header`
+    width: 100vw;
+    height: 8vh;
     align-items: center;
-`;
+    display: flex;
+    background-color: orange;
+    justify-content: space-between;
+`
+
+const BotoesDiv = styled.div`
+   display: flex;
+   justify-content: center;
+   width: 16vh;
+`
 
 function PokemonDetailsPage() {
 
@@ -18,13 +33,19 @@ function PokemonDetailsPage() {
 
     return(
         <FullPage>
-            <div>
-                <h1>POKEMON DETAILS PAGE</h1>
-                <div>
-                    <button onClick = {() => goToHomePage(history)}>HOME PAGE</button>
-                    <button onClick = {() => goToPokedexPage(history)}>DETAILS PAGE</button>
-                </div>
-            </div>
+            <>
+                <Header>
+                  <BotoesDiv> 
+                  <button onClick = {() => goToHomePage(history)}>Voltar para home</button>
+                  </BotoesDiv>
+                  
+
+                  <BotoesDiv>
+                  <button onClick = {() => goToPokedexPage(history)}>Ir para pokedex</button>
+                  </BotoesDiv>
+                </Header>
+                               
+            </>
         </FullPage>
     );
 }
