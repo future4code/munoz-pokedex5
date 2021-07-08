@@ -95,5 +95,3 @@ function HomePage() {
 
 export default HomePage;
 
-// colocar no card 
-//  <button className="buttonPokedexPage" onClick = {() => goToPokemonDetailsPage(history)}>Ir para Pokedex</button>

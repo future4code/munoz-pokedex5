@@ -55,8 +55,3 @@ function PokedexPage() {
 }
 
 export default PokedexPage;
-
-
-
-{/* <button onClick = {() => goToHomePage(history)}>HOME PAGE</button>
-<button onClick = {() => goToPokemonDetailsPage(history)}>DETAILS PAGE</button> */}
