@@ -40,14 +40,14 @@ const ContainerCard = styled.div`
    display: grid;
    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
    grid-row-gap: 10px;
-   column-gap: 50px;
+   column-gap: 35px;
    margin: 10px 10px 10px 0px;
 `
 
-function HomePage() {
-
+function HomePage() {    
     const history = useHistory();
 
+   
     return(
         <FullPage>
             <>
@@ -64,25 +64,7 @@ function HomePage() {
                 <ContainerCard>
 
                    <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard /> 
-                   <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard />
-                   <PokemonCard />
+                   
                    
                    {/* Repeti os cards para poder testar a ordem/espaço dos cards
                    Quando usarmos a API a gente passa o map e etc. */}
