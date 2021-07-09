@@ -94,6 +94,8 @@ function PokemonDetailsPage() {
                   <button onClick = {() => goToPokedexPage(history)}>Ir para pokedex</button>
                   </BotoesDiv>
                 </Header>
+
+
                 <ContainerInfo>
                     <ContainerImg>
                         <CardImgs src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png'></CardImgs>
