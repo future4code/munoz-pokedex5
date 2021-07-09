@@ -101,19 +101,14 @@ function PokemonDetailsPage() {
                     </ContainerImg>
                     <ContainerHabilidades>
                         <h2>Habilidades</h2>
-                            <ListaHabilidades>
-                                <li>hp: 78</li>
-
-                                <li>attack: 84</li>
-
-                                <li>defense: 78</li>
-
-                                <li>special-attack: 109</li>
-
-                                <li>special-defense: 85</li>
-
-                                <li>speed: 100</li>
-                            </ListaHabilidades>
+                        <ListaHabilidades>
+                            <li>hp: 78</li>
+                            <li>attack: 84</li>
+                            <li>defense: 78</li>
+                            <li>special-attack: 109</li>
+                            <li>special-defense: 85</li>
+                            <li>speed: 100</li>
+                        </ListaHabilidades>
 
                     </ContainerHabilidades>
                     <ContainerPoderEAtack>
