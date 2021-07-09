@@ -10,34 +10,38 @@ import {BASE_URL} from '../constantes/urls'
 /*Componente de cards de Pokemons */
 
 const ContainerCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-  background-color: rgb(240, 238, 238);
-  width: 17vw;
-  height: 40vh;
-  position: relative;
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between;
+ align-items: flex-end;
+ background-color: rgb(240, 238, 238);
+ width: 100%;
+ position: relative;
 `
 const ImagemContainer = styled.div`
-  width: 17vw;
-  height: 40vh;
-  border: 1px solid black;
+ width: 17vw;
+ height: 40vh;
+ display: flex;
+ justify-content: center;
+ align-items: center;
 `
 const ContainerBotoes = styled.div`
-  display: flex;
-  position: absolute;
-  bottom: 10px;
+ display: flex;
+ position: absolute;
+ bottom: 0%;
+ width: 100%;
+ justify-content: center;
 `
 
 const Botoes = styled.button`
-  width: 100%;
-  height: 5vh;
-  margin-right: 10px;
+ width: 100%;
+ height: 6vh;
+ padding: 0px 10px 0px 10px;
 `
 const Img = styled.img`
-  width: 15vw;
-  height: 35vh;
+ height: 60%;
+ align-items: center; 
+ margin-bottom: 40px;
 `
 
 function PokemonCard() {
@@ -63,8 +67,6 @@ function PokemonCard() {
             })
             setPokemons(orderedList)
           }
-          
-          
         })
         .catch((error) => console.log(error.message));
     });
@@ -80,8 +82,6 @@ function PokemonCard() {
       .catch((error) => console.log(error.message));
   };
 
-  
-   
 
     return(
         
@@ -93,7 +93,7 @@ function PokemonCard() {
                     </ImagemContainer>
                     <ContainerBotoes>
                         <Botoes>Adicionar a Pokédex</Botoes>
-                        <Botoes onClick = {() => goToPokemonDetailsPage(history)} >Ver detalhes</Botoes>
+                        <Botoes  onClick = {() => goToPokemonDetailsPage(history)} >Ver detalhes</Botoes>
                     </ContainerBotoes>
                   </ContainerCard> 
         })}
