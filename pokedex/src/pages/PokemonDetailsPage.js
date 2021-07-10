@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../constantes/urls';
 import styled from 'styled-components';
 import './StyleReset/ResetCss.css'
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { goToHomePage } from '../routes/coordinator';
 import { goToPokedexPage } from '../routes/coordinator';
+import axios from 'axios';
+import icon_09 from '../img/icon_09.png';
+import icon_10 from '../img/icon_10.png';
+import icon_23 from '../img/icon_23.png';
+import icon_35 from '../img/icon_35.png';
+import icon_36 from '../img/icon_36.png';
+import icon_134 from '../img/icon_134.png';
 
 const FullPage = styled.div`
     display: flex;
@@ -11,6 +19,7 @@ const FullPage = styled.div`
     justify-content: center;
     align-items: center;
     text-align: center;
+    font-family: Arial;
 `
 
 const Header = styled.header`
@@ -30,107 +39,189 @@ const BotoesDiv = styled.div`
 const CardImgs = styled.img`
    height: 160px;
    width: 160px;
-   background-color: rgb(240, 238, 238);
-`
-const ContainerInfo = styled.div`
-   display: flex;
-   justify-content: space-around;
-   align-items: center;
-   height: 90vh;
-   width: 70%;
-`
-const ContainerImg = styled.div`
-   width: 160px;
-   height: 500px;
-   display: flex;
-   flex-direction: column;
-   justify-content: space-around;
-`
-const ContainerHabilidades = styled.div`
-   height: 400px;
-   width: 300px;
-   padding: 8px;
-   background-color: rgb(240, 238, 238);
-`
-const ListaHabilidades = styled.ul`
-   list-style: none;
-   margin-top: 10px;
 `
 
-const ContainerPoderEAtack = styled.div`
+const InfoContainer = styled.div`
+    display: flex;
+    height: 90vh;
+    width: 100%;
+    justify-content: center;
+    background-color: rgb(240, 238, 238);
+`
+const DetailsCard = styled.div`
+    align-self: center;
+    width: 35%;
    display: flex;
    flex-direction: column;
-   justify-content: space-between;
-   height: 400px;
-   width: 300px;
-   padding: 10px;
+   align-items: center;
+   justify-content: space-evenly;
+   background-color: white;
+   padding: 56px;
+   border-radius: 25px;
 `
-const ContainerPoder = styled.div`
-   height: 100px;
-   width: 300px;
-   background-color: rgb(240, 238, 238);
-`
-const ContainerAtack = styled.div`
-   height: 250px;
-   width: 300px;
-   background-color: rgb(240, 238, 238);
-`
+
+const PokeNameContainer = styled.div`
+    margin-bottom: 32px;
+`;
+
+const PokeInfo = styled.h2`
+    margin-bottom: 1em;
+`;
+const PowerContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+`;
+const PokeTypeContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 1em;
+    width: 60%;
+`;
+
+const PokeType = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+    border-radius: 8px;
+    ${(props) => {
+        if (props.type === 'fire') {
+            return 'background-color: red;';
+        }
+        else if (props.type === 'flying') {
+            return 'background-color: rgb(240, 238, 238);';
+        }
+    }}
+`;
+
+const PokeImageContainer = styled.div`
+    display: flex;
+    margin-bottom: 1em;
+`;
+
+const AbilitiesContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-bottom: 1em;
+`;
+
+const PokeAbilities = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 1em;
+`;
+
+const Ability = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`;
+
+const AbilityIcon = styled.img`
+    margin-right: 5px;
+`;
 
 function PokemonDetailsPage() {
 
     const history = useHistory();
 
-    return(
+    const params = useParams();
+
+    const [pokemonDetails, setPokemonDetails] = useState()
+
+    const getPokemonDetails = () => {
+        axios.get(`${BASE_URL}/pokemon/charizard`)
+            .then((response) => {
+                console.log(response.data)
+                setPokemonDetails(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    useEffect(() => {
+        // getPokemonDetails();
+    }, []);
+
+    return (
         <FullPage>
-            <>
-                <Header>
-                  <BotoesDiv> 
-                  <button onClick = {() => goToHomePage(history)}>Voltar para home</button>
-                  </BotoesDiv>
-                  
-
-                  <BotoesDiv>
-                  <button onClick = {() => goToPokedexPage(history)}>Ir para pokedex</button>
-                  </BotoesDiv>
-                </Header>
+            <Header>
+                <BotoesDiv>
+                    <button onClick={() => goToHomePage(history)}>Voltar para home</button>
+                </BotoesDiv>
 
 
-                <ContainerInfo>
-                    <ContainerImg>
-                        <CardImgs src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png'></CardImgs>
-                        <CardImgs  src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/6.png'></CardImgs>
-                    </ContainerImg>
-                    <ContainerHabilidades>
-                        <h2>Habilidades</h2>
-                        <ListaHabilidades>
-                            <li>hp: 78</li>
-                            <li>attack: 84</li>
-                            <li>defense: 78</li>
-                            <li>special-attack: 109</li>
-                            <li>special-defense: 85</li>
-                            <li>speed: 100</li>
-                        </ListaHabilidades>
+                <BotoesDiv>
+                    <button onClick={() => goToPokedexPage(history)}>Ir para pokedex</button>
+                </BotoesDiv>
+            </Header>
+            <InfoContainer>
+                <DetailsCard>
+                    <PokeNameContainer>
+                        <h1>CHARIZARD</h1>
+                    </PokeNameContainer>
+                    <PowerContainer>
+                        <PokeInfo>PODERES</PokeInfo>
+                        <PokeTypeContainer>
+                            <PokeType type='fire'>
+                                FOGO
+                            </PokeType>
+                            <PokeType type='flying'>
+                                VOO
+                            </PokeType>
+                        </PokeTypeContainer>
+                    </PowerContainer>
+                    <PokeImageContainer>
+                        <CardImgs src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png' />
+                        <CardImgs src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/6.png' />
+                    </PokeImageContainer>
+                    <AbilitiesContainer>
+                        <PokeInfo>HABILIDADES</PokeInfo>
+                        <PokeAbilities>
+                            <Ability>
+                                <AbilityIcon src={icon_134} />
+                                Saúde: 78
+                            </Ability>
+                            <Ability>
+                                <AbilityIcon src={icon_35} />
+                                Ataque: 84
+                            </Ability>
+                            <Ability>
+                                <AbilityIcon src={icon_09} />
+                                Defesa: 78
+                            </Ability>
+                        </PokeAbilities>
+                        <PokeAbilities>
+                            <Ability>
+                                <AbilityIcon src={icon_36} />
+                                Ataque especial: 109
+                            </Ability>
+                            <Ability>
+                                <AbilityIcon src={icon_10} />
+                                Defesa especial: 85
+                            </Ability>
+                            <Ability>
+                                <AbilityIcon src={icon_23} />
+                                Velocidade: 100
+                            </Ability>
+                        </PokeAbilities>
+                    </AbilitiesContainer>
+                    <div>
+                        <PokeInfo>PODERES ESPECIAIS</PokeInfo>
+                        <p>mega-punch</p>
+                        <p>fire-punch</p>
+                        <p>thunder-punch</p>
+                        <p>scratch</p>
+                        <p>swords-dance</p>
+                    </div>
 
-                    </ContainerHabilidades>
-                    <ContainerPoderEAtack>
-                        <ContainerPoder>
-                            <h2>Poderes</h2>
-                            <p>Fire</p>
-                            <p>Flying</p>
-
-                        </ContainerPoder>
-                        <ContainerAtack>
-                            <h1>Ataques Especiais</h1>
-                            <p>mega-punch</p>
-                            <p>fire-punch</p>
-                            <p>thunder-punch</p>
-                            <p>scratch</p>
-                            <p>swords-dance</p>
-
-                        </ContainerAtack>
-                    </ContainerPoderEAtack>
-                </ContainerInfo>              
-            </>
+                </DetailsCard>
+            </InfoContainer>
         </FullPage>
     );
 }
