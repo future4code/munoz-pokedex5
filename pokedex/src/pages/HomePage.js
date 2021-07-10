@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import './StyleReset/ResetCss.css'
 import { useHistory } from 'react-router-dom';
 import { goToPokedexPage } from '../routes/coordinator';
-import PokemonCard from '../Components/PokemonCards';
+import PokemonCard from '../components/PokemonCards';
 
 
 const FullPage = styled.div`
