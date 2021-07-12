@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import '../pages/StyleReset/ResetCss.css'
 import { useHistory } from 'react-router-dom'
 import { goToPokemonDetailsPage } from '../routes/coordinator'
-import axios from 'axios'
-import {BASE_URL} from '../constantes/urls'
+
 
 
 /*Componente de cards de Pokemons */
@@ -44,59 +43,23 @@ const Img = styled.img`
  margin-bottom: 40px;
 `
 
-function PokemonCard() {
+function PokemonCard(props) {
 
-  const [pokeNomes, setPokeNomes] = useState([])
-  const [pokemons, setPokemons] = useState([])
   const history = useHistory();
-
-  useEffect(() => {
-    getPokeNomes();
-  }, []);
-
-  useEffect(() => {
-    const novoArray = [];
-    pokeNomes.forEach((poke) => {
-      axios
-        .get(`${BASE_URL}/pokemon/${poke.name}`)
-        .then((response) => {
-          novoArray.push(response.data);
-          if(novoArray.length === 20) {
-            const orderedList = novoArray.sort((a, b) => {
-              return a.id - b.id;
-            })
-            setPokemons(orderedList)
-          }
-        })
-        .catch((error) => console.log(error.message));
-    });
-  }, [pokeNomes]);
-
-
-  const getPokeNomes = () => {
-    axios
-      .get(`${BASE_URL}/pokemon?limit=20`)
-      .then((response) => {
-        setPokeNomes(response.data.results);
-      })
-      .catch((error) => console.log(error.message));
-  };
-
 
     return(
         
       <>
-        {pokemons && pokemons.map((poke) => {
-          return <ContainerCard>    
-                    <ImagemContainer>
-                      <Img src={poke.sprites.front_default}></Img>
-                    </ImagemContainer>
-                    <ContainerBotoes>
-                        <Botoes>Adicionar a Pokédex</Botoes>
-                        <Botoes  onClick = {() => goToPokemonDetailsPage(history)} >Ver detalhes</Botoes>
-                    </ContainerBotoes>
-                  </ContainerCard> 
-        })}
+          <ContainerCard >    
+              <ImagemContainer>
+                  <Img src={props.PokePhoto}></Img>
+              </ImagemContainer>
+                <ContainerBotoes>
+                     <Botoes onClick={props.Add}>Adicionar a Pokédex</Botoes>
+                     <Botoes  onClick = {() => goToPokemonDetailsPage(history)}>Ver detalhes</Botoes>
+                </ContainerBotoes>
+          </ContainerCard> 
+     
       </>
       
         
@@ -108,3 +71,19 @@ function PokemonCard() {
 }
 
 export default PokemonCard;
+
+
+
+
+
+// {pokemons && pokemons.map((poke) => {
+//   return <ContainerCard  key={poke.id} >    
+//             <ImagemContainer>
+//               <Img src={poke.sprites.front_default}></Img>
+//             </ImagemContainer>
+//             <ContainerBotoes>
+//                 <Botoes onClick={() => funcaoteste(poke)}>Adicionar a Pokédex</Botoes>
+//                 <Botoes  onClick = {() => goToPokemonDetailsPage(history)} >Ver detalhes</Botoes>
+//             </ContainerBotoes>
+//           </ContainerCard> 
+// })}
