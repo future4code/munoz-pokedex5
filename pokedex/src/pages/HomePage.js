@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import './StyleReset/ResetCss.css'
 import { useHistory } from 'react-router-dom';
 import { goToPokedexPage } from '../routes/coordinator';
 import PokemonCard from '../Components/PokemonCards';
+import {BASE_URL} from '../constantes/urls'
+import axios from 'axios'
 
 
 const FullPage = styled.div`
@@ -44,10 +46,59 @@ const ContainerCard = styled.div`
    margin: 10px 10px 10px 0px;
 `
 
-function HomePage() {    
-    const history = useHistory();
+function HomePage(props) {    
 
-   
+  const [pokeNomes, setPokeNomes] = useState([])
+  const [pokemons, setPokemons] = useState([])
+
+
+  const history = useHistory();
+
+  useEffect(() => {
+    getPokeNomes();
+  }, []);
+
+  useEffect(() => {
+    const novoArray = [];
+    pokeNomes.forEach((poke) => {
+      axios
+        .get(`${BASE_URL}/pokemon/${poke.name}`)
+        .then((response) => {
+          novoArray.push(response.data);
+          if(novoArray.length === 20) {
+            const orderedList = novoArray.sort((a, b) => {
+              return a.id - b.id;
+            })
+            setPokemons(orderedList)
+          }
+        })
+        .catch((error) => console.log(error.message));
+    });
+  }, [pokeNomes]);
+
+
+  const getPokeNomes = () => {
+    axios
+      .get(`${BASE_URL}/pokemon?limit=20`)
+      .then((response) => {
+        setPokeNomes(response.data.results);
+      })
+      .catch((error) => console.log(error.message));
+  };
+     
+   const funcaoteste = (poke) =>{
+
+    const newArrayPokemon = [...props.pokedex, poke]
+    props.setPokedex(newArrayPokemon)
+
+
+  }
+ 
+  const listaDePokemons = pokemons && pokemons.map((poke) => {
+    return <PokemonCard key={poke.id} Add={() => funcaoteste(poke)} PokePhoto={poke.sprites.front_default}/>
+
+  })
+
     return(
         <FullPage>
             <>
@@ -63,11 +114,8 @@ function HomePage() {
 
                 <ContainerCard>
 
-                   <PokemonCard />
+                  {listaDePokemons}
                    
-                   
-                   {/* Repeti os cards para poder testar a ordem/espaço dos cards
-                   Quando usarmos a API a gente passa o map e etc. */}
                 </ContainerCard>
                       
             </>
@@ -77,3 +125,8 @@ function HomePage() {
 
 export default HomePage;
 
+ {/* {listaDePokemons.filter((poke) => {
+                  if(poke.id !== props.pokedex){
+                    return console.log(poke)
+                  }
+                })} */}
