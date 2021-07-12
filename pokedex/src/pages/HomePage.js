@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import './StyleReset/ResetCss.css'
 import { useHistory } from 'react-router-dom';
 import { goToPokedexPage } from '../routes/coordinator';
+
 import PokemonCard from '../Components/PokemonCards';
 import {BASE_URL} from '../constantes/urls'
 import axios from 'axios'
+
 
 
 const FullPage = styled.div`
