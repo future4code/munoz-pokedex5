@@ -86,53 +86,55 @@ function HomePage(props) {
       .catch((error) => console.log(error.message));
   };
 
-  const funcaoteste = (poke) => {
-
+     
+   const pegaPokemonOnClick = (poke) =>{
+     
     const newArrayPokemon = [...props.pokedex, poke]
     props.setPokedex(newArrayPokemon)
 
-
   }
-
-  const listaDePokemons = pokemons && pokemons.map((poke) => {
-    return (
-      <PokemonCard
-        key={poke.id}
-        Add={() => funcaoteste(poke)}
-        PokePhoto={poke.sprites.front_default}
-        goToPokemonDetailsPage={() => goToPokemonDetailsPage(history, poke.name)}
-      />)
-
+ 
+  const filtered = pokemons.filter((poke) => {
+   const estaNaPokedex = props.pokedex.find((mons) => {
+     if(poke.id === mons.id){
+       return true
+     } else {
+       return false
+     }
+   })
+     if (estaNaPokedex){
+       return false
+     } else {
+       return true
+     }
+   
   })
 
-  return (
-    <FullPage>
-      <>
-        <Header>
-          <BotoesDiv>
-            <button className="buttonPokedexPage" onClick={() => goToPokedexPage(history)}>Ir para Pokedex</button>
-          </BotoesDiv>
+    return(
+        <FullPage>
+            <>
+                <Header>
+                  <BotoesDiv> 
+                  <button className="buttonPokedexPage" onClick = {() => goToPokedexPage(history)}>Ir para Pokedex</button>
+                  </BotoesDiv>
+                 
+                  <TituloDiv>
+                  <h1>Lista de Pokémons</h1>
+                  </TituloDiv>
+                </Header>
 
-          <TituloDiv>
-            <h1>Lista de Pokémons</h1>
-          </TituloDiv>
-        </Header>
+                <ContainerCard>
 
-        <ContainerCard>
-
-          {listaDePokemons}
-
-        </ContainerCard>
-
-      </>
-    </FullPage>
-  );
+                {filtered.map((value) => {
+                  return <PokemonCard key={value.id} Add={() => pegaPokemonOnClick(value)} PokePhoto={value.sprites.front_default}/>
+                }) }
+                   
+                </ContainerCard>
+                      
+            </>
+        </FullPage>
+    );
 }
 
 export default HomePage;
 
-{/* {listaDePokemons.filter((poke) => {
-                  if(poke.id !== props.pokedex){
-                    return console.log(poke)
-                  }
-                })} */}

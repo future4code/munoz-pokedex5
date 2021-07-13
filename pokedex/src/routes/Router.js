@@ -8,7 +8,6 @@ import PokemonDetailsPage from '../pages/PokemonDetailsPage';
 function Router() {
 
     const [pokedex, setPokedex] = useState([])
-   
 
     return (
         <BrowserRouter>
