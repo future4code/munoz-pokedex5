@@ -3,12 +3,10 @@ import styled from 'styled-components';
 import './StyleReset/ResetCss.css'
 import { useHistory } from 'react-router-dom';
 import { goToPokedexPage } from '../routes/coordinator';
-
+import { goToPokemonDetailsPage } from '../routes/coordinator';
 import PokemonCard from '../Components/PokemonCards';
-import {BASE_URL} from '../constantes/urls'
+import { BASE_URL } from '../constantes/urls'
 import axios from 'axios'
-
-
 
 const FullPage = styled.div`
     width: 100vw;
@@ -48,7 +46,7 @@ const ContainerCard = styled.div`
    margin: 10px 10px 10px 0px;
 `
 
-function HomePage(props) {    
+function HomePage(props) {
 
   const [pokeNomes, setPokeNomes] = useState([])
   const [pokemons, setPokemons] = useState([])
@@ -67,7 +65,7 @@ function HomePage(props) {
         .get(`${BASE_URL}/pokemon/${poke.name}`)
         .then((response) => {
           novoArray.push(response.data);
-          if(novoArray.length === 20) {
+          if (novoArray.length === 20) {
             const orderedList = novoArray.sort((a, b) => {
               return a.id - b.id;
             })
@@ -87,9 +85,10 @@ function HomePage(props) {
       })
       .catch((error) => console.log(error.message));
   };
+
      
    const pegaPokemonOnClick = (poke) =>{
-
+     
     const newArrayPokemon = [...props.pokedex, poke]
     props.setPokedex(newArrayPokemon)
 
@@ -138,3 +137,4 @@ function HomePage(props) {
 }
 
 export default HomePage;
+
