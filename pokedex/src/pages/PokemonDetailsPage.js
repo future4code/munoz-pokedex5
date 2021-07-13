@@ -134,7 +134,7 @@ function PokemonDetailsPage() {
     const [pokemonDetails, setPokemonDetails] = useState()
 
     const getPokemonDetails = () => {
-        axios.get(`${BASE_URL}/pokemon/charizard`)
+        axios.get(`${BASE_URL}/pokemon/${params.name}`)
             .then((response) => {
                 console.log(response.data)
                 setPokemonDetails(response.data);
@@ -145,7 +145,7 @@ function PokemonDetailsPage() {
     }
 
     useEffect(() => {
-        // getPokemonDetails();
+        getPokemonDetails();
     }, []);
 
     return (

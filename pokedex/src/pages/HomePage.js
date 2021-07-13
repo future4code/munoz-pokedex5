@@ -3,12 +3,10 @@ import styled from 'styled-components';
 import './StyleReset/ResetCss.css'
 import { useHistory } from 'react-router-dom';
 import { goToPokedexPage } from '../routes/coordinator';
-
+import { goToPokemonDetailsPage } from '../routes/coordinator';
 import PokemonCard from '../Components/PokemonCards';
-import {BASE_URL} from '../constantes/urls'
+import { BASE_URL } from '../constantes/urls'
 import axios from 'axios'
-
-
 
 const FullPage = styled.div`
     width: 100vw;
@@ -48,7 +46,7 @@ const ContainerCard = styled.div`
    margin: 10px 10px 10px 0px;
 `
 
-function HomePage(props) {    
+function HomePage(props) {
 
   const [pokeNomes, setPokeNomes] = useState([])
   const [pokemons, setPokemons] = useState([])
@@ -67,7 +65,7 @@ function HomePage(props) {
         .get(`${BASE_URL}/pokemon/${poke.name}`)
         .then((response) => {
           novoArray.push(response.data);
-          if(novoArray.length === 20) {
+          if (novoArray.length === 20) {
             const orderedList = novoArray.sort((a, b) => {
               return a.id - b.id;
             })
@@ -87,47 +85,53 @@ function HomePage(props) {
       })
       .catch((error) => console.log(error.message));
   };
-     
-   const funcaoteste = (poke) =>{
+
+  const funcaoteste = (poke) => {
 
     const newArrayPokemon = [...props.pokedex, poke]
     props.setPokedex(newArrayPokemon)
 
 
   }
- 
+
   const listaDePokemons = pokemons && pokemons.map((poke) => {
-    return <PokemonCard key={poke.id} Add={() => funcaoteste(poke)} PokePhoto={poke.sprites.front_default}/>
+    return (
+      <PokemonCard
+        key={poke.id}
+        Add={() => funcaoteste(poke)}
+        PokePhoto={poke.sprites.front_default}
+        goToPokemonDetailsPage={() => goToPokemonDetailsPage(history, poke.name)}
+      />)
 
   })
 
-    return(
-        <FullPage>
-            <>
-                <Header>
-                  <BotoesDiv> 
-                  <button className="buttonPokedexPage" onClick = {() => goToPokedexPage(history)}>Ir para Pokedex</button>
-                  </BotoesDiv>
-                 
-                  <TituloDiv>
-                  <h1>Lista de Pokémons</h1>
-                  </TituloDiv>
-                </Header>
+  return (
+    <FullPage>
+      <>
+        <Header>
+          <BotoesDiv>
+            <button className="buttonPokedexPage" onClick={() => goToPokedexPage(history)}>Ir para Pokedex</button>
+          </BotoesDiv>
 
-                <ContainerCard>
+          <TituloDiv>
+            <h1>Lista de Pokémons</h1>
+          </TituloDiv>
+        </Header>
 
-                  {listaDePokemons}
-                   
-                </ContainerCard>
-                      
-            </>
-        </FullPage>
-    );
+        <ContainerCard>
+
+          {listaDePokemons}
+
+        </ContainerCard>
+
+      </>
+    </FullPage>
+  );
 }
 
 export default HomePage;
 
- {/* {listaDePokemons.filter((poke) => {
+{/* {listaDePokemons.filter((poke) => {
                   if(poke.id !== props.pokedex){
                     return console.log(poke)
                   }

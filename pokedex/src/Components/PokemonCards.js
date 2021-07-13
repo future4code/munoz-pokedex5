@@ -1,10 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import '../pages/StyleReset/ResetCss.css'
-import { useHistory } from 'react-router-dom'
-import { goToPokemonDetailsPage } from '../routes/coordinator'
-
-
 
 /*Componente de cards de Pokemons */
 
@@ -45,8 +41,6 @@ const Img = styled.img`
 
 function PokemonCard(props) {
 
-  const history = useHistory();
-
     return(
         
       <>
@@ -56,7 +50,7 @@ function PokemonCard(props) {
               </ImagemContainer>
                 <ContainerBotoes>
                      <Botoes onClick={props.Add}>Adicionar a Pokédex</Botoes>
-                     <Botoes  onClick = {() => goToPokemonDetailsPage(history)}>Ver detalhes</Botoes>
+                     <Botoes  onClick = {props.goToPokemonDetailsPage}>Ver detalhes</Botoes>
                 </ContainerBotoes>
           </ContainerCard> 
      
