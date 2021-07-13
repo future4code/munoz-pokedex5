@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import './StyleReset/ResetCss.css'
 import { useHistory } from 'react-router-dom';
-import { goToHomePage, goToPokemonDetailsPage } from '../routes/coordinator';
-
+import { goToHomePage } from '../routes/coordinator';
+import { goToPokemonDetailsPage } from '../routes/coordinator';
 
 const FullPage = styled.div`
     width: 100vw;
