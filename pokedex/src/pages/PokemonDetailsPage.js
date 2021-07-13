@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { BASE_URL } from '../constantes/urls';
+import { pokeTypes, pokeTypePT } from '../constantes/pokemonTypes';
 import styled from 'styled-components';
 import './StyleReset/ResetCss.css'
-import { Redirect, useHistory, useParams } from 'react-router-dom';
-import { goToHomePage } from '../routes/coordinator';
-import { goToPokedexPage } from '../routes/coordinator';
+import { useHistory, useParams } from 'react-router-dom';
+import { goToHomePage,  goToPokedexPage } from '../routes/coordinator';
 import axios from 'axios';
 import icon_09 from '../img/icon_09.png';
 import icon_10 from '../img/icon_10.png';
@@ -50,7 +50,7 @@ const InfoContainer = styled.div`
 `
 const DetailsCard = styled.div`
     align-self: center;
-    width: 35%;
+    width: 27%;
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -62,6 +62,7 @@ const DetailsCard = styled.div`
 
 const PokeNameContainer = styled.div`
     margin-bottom: 32px;
+    text-transform: uppercase;
 `;
 
 const PokeInfo = styled.h2`
@@ -87,14 +88,8 @@ const PokeType = styled.div`
     align-items: center;
     padding: 6px;
     border-radius: 8px;
-    ${(props) => {
-        if (props.type === 'fire') {
-            return 'background-color: red;';
-        }
-        else if (props.type === 'flying') {
-            return 'background-color: rgb(240, 238, 238);';
-        }
-    }}
+    text-transform: uppercase;
+    ${pokeTypes};
 `;
 
 const PokeImageContainer = styled.div`
@@ -105,7 +100,7 @@ const PokeImageContainer = styled.div`
 const AbilitiesContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 100%;
     margin-bottom: 1em;
 `;
 
@@ -131,16 +126,15 @@ function PokemonDetailsPage() {
 
     const params = useParams();
 
-    const [pokemonDetails, setPokemonDetails] = useState()
+    const [pokeDetails, setPokeDetails] = useState()
 
     const getPokemonDetails = () => {
         axios.get(`${BASE_URL}/pokemon/${params.name}`)
             .then((response) => {
-                console.log(response.data)
-                setPokemonDetails(response.data);
+                setPokeDetails(response.data);
             })
             .catch((error) => {
-                console.log(error);
+                console.log(error.response);
             })
     }
 
@@ -160,68 +154,69 @@ function PokemonDetailsPage() {
                     <button onClick={() => goToPokedexPage(history)}>Ir para pokedex</button>
                 </BotoesDiv>
             </Header>
-            <InfoContainer>
-                <DetailsCard>
-                    <PokeNameContainer>
-                        <h1>CHARIZARD</h1>
-                    </PokeNameContainer>
-                    <PowerContainer>
-                        <PokeInfo>PODERES</PokeInfo>
-                        <PokeTypeContainer>
-                            <PokeType type='fire'>
-                                FOGO
-                            </PokeType>
-                            <PokeType type='flying'>
-                                VOO
-                            </PokeType>
-                        </PokeTypeContainer>
-                    </PowerContainer>
-                    <PokeImageContainer>
-                        <CardImgs src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png' />
-                        <CardImgs src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/6.png' />
-                    </PokeImageContainer>
-                    <AbilitiesContainer>
-                        <PokeInfo>HABILIDADES</PokeInfo>
-                        <PokeAbilities>
-                            <Ability>
-                                <AbilityIcon src={icon_134} />
-                                Saúde: 78
-                            </Ability>
-                            <Ability>
-                                <AbilityIcon src={icon_35} />
-                                Ataque: 84
-                            </Ability>
-                            <Ability>
-                                <AbilityIcon src={icon_09} />
-                                Defesa: 78
-                            </Ability>
-                        </PokeAbilities>
-                        <PokeAbilities>
-                            <Ability>
-                                <AbilityIcon src={icon_36} />
-                                Ataque especial: 109
-                            </Ability>
-                            <Ability>
-                                <AbilityIcon src={icon_10} />
-                                Defesa especial: 85
-                            </Ability>
-                            <Ability>
-                                <AbilityIcon src={icon_23} />
-                                Velocidade: 100
-                            </Ability>
-                        </PokeAbilities>
-                    </AbilitiesContainer>
-                    <div>
-                        <PokeInfo>PODERES ESPECIAIS</PokeInfo>
-                        <p>mega-punch</p>
-                        <p>fire-punch</p>
-                        <p>thunder-punch</p>
-                        <p>scratch</p>
-                        <p>swords-dance</p>
-                    </div>
+            {pokeDetails ? (
+                <InfoContainer>
+                    <DetailsCard>
+                        <PokeNameContainer>
+                            <h1>{pokeDetails.name}</h1>
+                        </PokeNameContainer>
+                        <PowerContainer>
+                            <PokeInfo>PODERES</PokeInfo>
+                            <PokeTypeContainer>
+                                {pokeDetails.types.map((poke) => {
+                                    return (
+                                        <PokeType type={poke.type.name}>
+                                            {pokeTypePT(poke.type.name)}
+                                        </PokeType>)
+                                })}
+                            </PokeTypeContainer>
+                        </PowerContainer>
+                        <PokeImageContainer>
+                            <CardImgs src={pokeDetails.sprites.front_default} alt={`${pokeDetails.name} front default`} />
+                            <CardImgs src={pokeDetails.sprites.back_default} alt={`${pokeDetails.name} back default`} />
+                        </PokeImageContainer>
+                        <AbilitiesContainer>
+                            <PokeInfo>HABILIDADES</PokeInfo>
+                            <PokeAbilities>
+                                <Ability>
+                                    <AbilityIcon src={icon_134} />
+                                    Saúde: {pokeDetails.stats[0].base_stat}
+                                </Ability>
+                                <Ability>
+                                    <AbilityIcon src={icon_35} />
+                                    Ataque: {pokeDetails.stats[1].base_stat}
+                                </Ability>
+                                <Ability>
+                                    <AbilityIcon src={icon_09} />
+                                    Defesa: {pokeDetails.stats[2].base_stat}
+                                </Ability>
+                            </PokeAbilities>
+                            <PokeAbilities>
+                                <Ability>
+                                    <AbilityIcon src={icon_36} />
+                                    Ataque especial: {pokeDetails.stats[3].base_stat}
+                                </Ability>
+                                <Ability>
+                                    <AbilityIcon src={icon_10} />
+                                    Defesa especial: {pokeDetails.stats[4].base_stat}
+                                </Ability>
+                                <Ability>
+                                    <AbilityIcon src={icon_23} />
+                                    Velocidade: {pokeDetails.stats[5].base_stat}
+                                </Ability>
+                            </PokeAbilities>
+                        </AbilitiesContainer>
+                        <div>
+                            <PokeInfo>PODERES PRINCIPAIS</PokeInfo>
+                            {pokeDetails.moves.slice(0, 5).map((poke) => {
+                                return <p>{poke.move.name}</p>
+                            })}
+                        </div>
 
-                </DetailsCard>
-            </InfoContainer>
+                    </DetailsCard>
+                </InfoContainer>)
+                : <div></div>
+            }
         </FullPage>
     );
 }
