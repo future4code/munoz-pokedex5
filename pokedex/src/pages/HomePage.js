@@ -94,6 +94,8 @@ function HomePage(props) {
 
   }
 
+  
+
   const filtered = pokemons.filter((poke) => {
     const estaNaPokedex = props.pokedex.find((mons) => {
       if (poke.id === mons.id) {
@@ -130,6 +132,7 @@ function HomePage(props) {
               <PokemonCard
                 key={value.id}
                 Add={() => pegaPokemonOnClick(value)}
+                
                 PokePhoto={value.sprites.front_default}
                 goToPokemonDetailsPage = {() => goToPokemonDetailsPage(history, value.name)}
               />)
