@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import './StyleReset/ResetCss.css'
 import { useHistory } from 'react-router-dom';
 import { goToHomePage } from '../routes/coordinator';
+import { goToPokemonDetailsPage } from '../routes/coordinator';
 
 
 
@@ -119,7 +120,7 @@ function PokedexPage(props) {
                             </ImagemContainer>
                             <ContainerBotoes>
                                     <Botoes onClick={() => excluirDaPokedex(poke.name)}>Remover da Pokédex</Botoes>
-                                    <Botoes  onClick = {poke.goToPokemonDetailsPage}>Ver detalhes</Botoes>
+                                    <Botoes onClick={() => goToPokemonDetailsPage(history, poke.name)}>Ver detalhes</Botoes>
                             </ContainerBotoes>
                         </ContainerCardPoke> 
                 
