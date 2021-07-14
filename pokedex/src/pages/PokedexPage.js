@@ -5,8 +5,6 @@ import { useHistory } from 'react-router-dom';
 import { goToHomePage } from '../routes/coordinator';
 import { goToPokemonDetailsPage } from '../routes/coordinator';
 
-
-
 const FullPage = styled.div`
     width: 100vw;
     min-height: 100vh;
