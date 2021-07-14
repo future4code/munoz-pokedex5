@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import Header from '../Components/Header';
 import { BASE_URL } from '../constantes/urls';
+import { goToHomePage, goToPokedexPage } from '../routes/coordinator';
 import { pokeTypes, pokeTypePT } from '../constantes/pokemonTypes';
 import styled from 'styled-components';
 import './StyleReset/ResetCss.css'
-import { useHistory, useParams } from 'react-router-dom';
-import { goToHomePage,  goToPokedexPage } from '../routes/coordinator';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import icon_09 from '../img/icon_09.png';
 import icon_10 from '../img/icon_10.png';
@@ -16,63 +17,88 @@ import icon_134 from '../img/icon_134.png';
 const FullPage = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    text-align: center;
     font-family: Arial;
-`
-
-const Header = styled.header`
     width: 100vw;
-    height: 8vh;
-    align-items: center;
-    display: flex;
-    background-color: orange;
-    justify-content: space-between;
-`
-
-const BotoesDiv = styled.div`
-   display: flex;
-   justify-content: center;
-   width: 16vh;
-`
-const CardImgs = styled.img`
-   height: 160px;
-   width: 160px;
-`
+    height: 100vh;
+`;
 
 const InfoContainer = styled.div`
     display: flex;
-    height: 90vh;
     width: 100%;
     justify-content: center;
+    align-items: start;
     background-color: rgb(240, 238, 238);
-`
+    @media (max-width: 375px) {
+        background-color: white;
+        align-items: normal;
+        justify-content: center;
+    }
+    @media (min-width: 720px) {
+        height: 100%;
+    }
+`;
+
+const CardImgs = styled.img`
+    height: auto;
+    width: 160px;
+    @media (max-width: 375px) {
+        flex-direction: column;
+        width: 140px;
+    }
+`;
+
 const DetailsCard = styled.div`
     align-self: center;
-    width: 27%;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: space-evenly;
-   background-color: white;
-   padding: 56px;
-   border-radius: 25px;
-`
+    width: 39%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: white;
+    padding: 56px;
+    border-radius: 25px;
+    @media (max-width: 375px) {
+        width: 70%;
+        align-items: center;
+        justify-content: start;
+        padding: 0;
+        margin-top: 15px;
+    };
+    @media (min-width: 720px) {
+        margin-top: 15px;
+    }
+`;
 
 const PokeNameContainer = styled.div`
     margin-bottom: 32px;
     text-transform: uppercase;
+    @media (max-width: 375px) {
+        margin-top: 1em;
+        margin-bottom: 0.5em;
+    }
 `;
 
-const PokeInfo = styled.h2`
+const PokeInfo = styled.div`
+    font-size: 22px;
+    font-weight: bold;
     margin-bottom: 1em;
+    display: flex;
+    justify-content: center;
+    @media (max-width: 375px) {
+        margin-bottom: 0px;
+        font-size: 16px;
+        margin: 0.8em 0;
+    }
 `;
 const PowerContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    @media (max-width: 375px) {
+        margin-bottom: 0px;
+    }
 `;
 const PokeTypeContainer = styled.div`
     display: flex;
@@ -80,6 +106,12 @@ const PokeTypeContainer = styled.div`
     justify-content: space-evenly;
     margin-bottom: 1em;
     width: 60%;
+    @media (max-width: 375px) {
+        margin-top: 0.2em;
+        margin-bottom: 0px;
+        font-size: 13px;
+        font-weight: bold;
+    }
 `;
 
 const PokeType = styled.div`
@@ -90,11 +122,13 @@ const PokeType = styled.div`
     border-radius: 8px;
     text-transform: uppercase;
     ${pokeTypes};
+    @media (max-width: 375px) {
+        margin-bottom: 0px;
+    }
 `;
 
 const PokeImageContainer = styled.div`
     display: flex;
-    margin-bottom: 1em;
 `;
 
 const AbilitiesContainer = styled.div`
@@ -102,28 +136,52 @@ const AbilitiesContainer = styled.div`
     flex-direction: column;
     width: 100%;
     margin-bottom: 1em;
+    @media (max-width: 375px) {
+        margin-bottom: 0px;
+    }
 `;
 
 const PokeAbilities = styled.div`
     display: flex;
     justify-content: space-evenly;
     margin-bottom: 1em;
+    @media (max-width: 375px) {
+        margin-bottom: 0px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 `;
 
 const Ability = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media (max-width: 375px) {
+        margin-bottom: 0px;
+    }
 `;
 
 const AbilityIcon = styled.img`
     margin-right: 5px;
 `;
 
+const PokeName = styled.div`
+    font-size: 30px;
+    font-weight: bold;
+    @media (max-width: 375px) {
+        font-size: 22px;
+    };
+`;
+
+const SpecialMovesContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
 function PokemonDetailsPage() {
 
     const history = useHistory();
-
     const params = useParams();
 
     const [pokeDetails, setPokeDetails] = useState()
@@ -144,21 +202,17 @@ function PokemonDetailsPage() {
 
     return (
         <FullPage>
-            <Header>
-                <BotoesDiv>
-                    <button onClick={() => goToHomePage(history)}>Voltar para home</button>
-                </BotoesDiv>
-
-
-                <BotoesDiv>
-                    <button onClick={() => goToPokedexPage(history)}>Ir para pokedex</button>
-                </BotoesDiv>
-            </Header>
+            <Header 
+            leftButton = 'HOME'
+            rightButton = 'POKÉDEX'
+            onClickLeftButton = {() => goToHomePage(history)}
+            onClickRightButton = {() => goToPokedexPage(history)}
+            />
             {pokeDetails ? (
                 <InfoContainer>
                     <DetailsCard>
                         <PokeNameContainer>
-                            <h1>{pokeDetails.name}</h1>
+                            <PokeName>{pokeDetails.name}</PokeName>
                         </PokeNameContainer>
                         <PowerContainer>
                             <PokeInfo>PODERES</PokeInfo>
@@ -206,12 +260,12 @@ function PokemonDetailsPage() {
                                 </Ability>
                             </PokeAbilities>
                         </AbilitiesContainer>
-                        <div>
+                        <SpecialMovesContainer>
                             <PokeInfo>PODERES PRINCIPAIS</PokeInfo>
                             {pokeDetails.moves.slice(0, 5).map((poke) => {
                                 return <p>{poke.move.name}</p>
                             })}
-                        </div>
+                        </SpecialMovesContainer>
 
                     </DetailsCard>
                 </InfoContainer>)
