@@ -1,59 +1,44 @@
 import React, { useEffect, useState } from 'react'
+import Header from '../Components/Header';
+import PokemonCard from '../Components/PokemonCards';
 import styled from 'styled-components';
 import './StyleReset/ResetCss.css'
 import { useHistory } from 'react-router-dom';
-import { goToPokedexPage } from '../routes/coordinator';
-import { goToPokemonDetailsPage } from '../routes/coordinator';
-import PokemonCard from '../Components/PokemonCards';
+import { goToHomePage, goToPokedexPage, goToPokemonDetailsPage } from '../routes/coordinator';
 import { BASE_URL } from '../constantes/urls'
 import axios from 'axios'
 
 import { useGlobalContext } from '../global/GlobalContext'
 
 const FullPage = styled.div`
-    width: 100vw;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-
-const Header = styled.header`
-    width: 100%;
-    height: 8vh;
-    align-items: center;
-    display: flex;
-    background-color: aqua;
-    justify-content: center;
-`
-
-const TituloDiv = styled.div`
-   display: flex;
-   justify-content: center;
-   flex-grow: 1;
-   padding-right: 100px;
-`
-
-const BotoesDiv = styled.div`
-   display: flex;
-   justify-content: center;
-   width: 16vh;
-`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial;
+`;
 
 const ContainerCard = styled.div`
-   display: grid;
-   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-   grid-row-gap: 10px;
-   column-gap: 35px;
-   margin: 10px 10px 10px 0px;
-`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-row-gap: 10px;
+  column-gap: 35px;
+  margin: 10px 10px 10px 0px;
+  @media(max-width: 375px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+  };
+`;
 
 function HomePage() {
 
   const [pokeNomes, setPokeNomes] = useState([])
   const [pokemons, setPokemons] = useState([])
 
-  const {states, setters} = useGlobalContext()
+  const { states, setters } = useGlobalContext()
 
   const history = useHistory();
 
@@ -79,7 +64,6 @@ function HomePage() {
     });
   }, [pokeNomes]);
 
-
   const getPokeNomes = () => {
     axios
       .get(`${BASE_URL}/pokemon?limit=20`)
@@ -89,15 +73,12 @@ function HomePage() {
       .catch((error) => console.log(error.message));
   };
 
-
   const pegaPokemonOnClick = (poke) => {
 
     const newArrayPokemon = [...states.pokedex, poke]
     setters.setPokedex(newArrayPokemon)
 
   }
-
-  
 
   const filtered = pokemons.filter((poke) => {
     const estaNaPokedex = states.pokedex.find((mons) => {
@@ -117,33 +98,24 @@ function HomePage() {
 
   return (
     <FullPage>
-      <>
-        <Header>
-          <BotoesDiv>
-            <button className="buttonPokedexPage" onClick={() => goToPokedexPage(history)}>Ir para Pokedex</button>
-          </BotoesDiv>
-
-          <TituloDiv>
-            <h1>Lista de Pokémons</h1>
-          </TituloDiv>
-        </Header>
-
-        <ContainerCard>
-
-          {filtered.map((value) => {
-            return (
-              <PokemonCard
-                key={value.id}
-                Add={() => pegaPokemonOnClick(value)}
-                
-                PokePhoto={value.sprites.front_default}
-                goToPokemonDetailsPage = {() => goToPokemonDetailsPage(history, value.name)}
-              />)
-          })}
-
-        </ContainerCard>
-
-      </>
+      <Header
+        leftButton='HOME'
+        rightButton='POKÉDEX'
+        onClickLeftButton={() => goToHomePage(history)}
+        onClickRightButton={() => goToPokedexPage(history)}
+      />
+      <ContainerCard>
+        {filtered.map((value) => {
+          return (
+            <PokemonCard
+              key={value.id}
+              Add={() => pegaPokemonOnClick(value)}
+              pokeName={value.name}
+              PokePhoto={value.sprites.front_default}
+              goToPokemonDetailsPage={() => goToPokemonDetailsPage(history, value.name)}
+            />)
+        })}
+      </ContainerCard>
     </FullPage>
   );
 }
