@@ -179,6 +179,7 @@ const SpecialMovesContainer = styled.div`
     flex-direction: column;
     align-items: center;
 `;
+
 function PokemonDetailsPage() {
 
     const history = useHistory();
@@ -219,7 +220,9 @@ function PokemonDetailsPage() {
                             <PokeTypeContainer>
                                 {pokeDetails.types.map((poke) => {
                                     return (
-                                        <PokeType type={poke.type.name}>
+                                        <PokeType
+                                        key={poke.type.name}
+                                        type={poke.type.name}>
                                             {pokeTypePT(poke.type.name)}
                                         </PokeType>)
                                 })}
@@ -263,7 +266,7 @@ function PokemonDetailsPage() {
                         <SpecialMovesContainer>
                             <PokeInfo>PODERES PRINCIPAIS</PokeInfo>
                             {pokeDetails.moves.slice(0, 5).map((poke) => {
-                                return <p>{poke.move.name}</p>
+                                return <p key = {poke.move.name}>{poke.move.name}</p>
                             })}
                         </SpecialMovesContainer>
 
