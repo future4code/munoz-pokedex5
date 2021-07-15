@@ -8,6 +8,8 @@ import PokemonCard from '../Components/PokemonCards';
 import { BASE_URL } from '../constantes/urls'
 import axios from 'axios'
 
+import { useGlobalContext } from '../global/GlobalContext'
+
 const FullPage = styled.div`
     width: 100vw;
     min-height: 100vh;
@@ -46,11 +48,12 @@ const ContainerCard = styled.div`
    margin: 10px 10px 10px 0px;
 `
 
-function HomePage(props) {
+function HomePage() {
 
   const [pokeNomes, setPokeNomes] = useState([])
   const [pokemons, setPokemons] = useState([])
 
+  const {states, setters} = useGlobalContext()
 
   const history = useHistory();
 
@@ -89,15 +92,15 @@ function HomePage(props) {
 
   const pegaPokemonOnClick = (poke) => {
 
-    const newArrayPokemon = [...props.pokedex, poke]
-    props.setPokedex(newArrayPokemon)
+    const newArrayPokemon = [...states.pokedex, poke]
+    setters.setPokedex(newArrayPokemon)
 
   }
 
   
 
   const filtered = pokemons.filter((poke) => {
-    const estaNaPokedex = props.pokedex.find((mons) => {
+    const estaNaPokedex = states.pokedex.find((mons) => {
       if (poke.id === mons.id) {
         return true
       } else {

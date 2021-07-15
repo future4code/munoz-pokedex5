@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
 import './StyleReset/ResetCss.css'
 import { useHistory } from 'react-router-dom';
 import { goToHomePage } from '../routes/coordinator';
 import { goToPokemonDetailsPage } from '../routes/coordinator';
+
+import { useGlobalContext } from '../global/GlobalContext'
 
 const FullPage = styled.div`
     width: 100vw;
@@ -78,22 +80,23 @@ const Botoes = styled.button`
 `
 
 
-function PokedexPage(props) {
+function PokedexPage() {
+
+    const {states, setters} = useGlobalContext()
 
     const history = useHistory();
 
     const excluirDaPokedex = (pok) => {
-        const arrayExcluir = props.pokedex.filter((poke) => {
+        const arrayExcluir = states.pokedex.filter((poke) => {
             if (poke.name === pok) {
               return false;
             } else {
               return true;
             }
           })
-          props.setPokedex(arrayExcluir)
+          setters.setPokedex(arrayExcluir)
       }
 
-    console.log(props)
 
     return(
         <FullPage>
@@ -110,7 +113,7 @@ function PokedexPage(props) {
 
             <ContainerCard>
 
-                {props.pokedex.map((poke) => {
+                {states.pokedex.map((poke) => {
                      return <>
                         <ContainerCardPoke key={poke.name} >    
                             <ImagemContainer>
