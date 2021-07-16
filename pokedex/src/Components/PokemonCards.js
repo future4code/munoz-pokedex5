@@ -75,10 +75,11 @@ function PokemonCard(props) {
 
     return (
         <ContainerCard >
-                <PokeName>{props.pokeName}</PokeName>
+            <PokeName>{props.pokeName}</PokeName>
             <ImagemContainer>
                 <Img src={props.PokePhoto}></Img>
             </ImagemContainer>
+
             <ContainerBotoes>
                 <Button
                 variant="contained"
@@ -86,7 +87,7 @@ function PokemonCard(props) {
                 size="medium"                
                 startIcon={<AddCircleIcon />}
                 onClick={props.Add}
-                >ADd A POKEDEX</Button>
+                >ADD A POKEDEX</Button>
 
                 <Button
                 variant="contained"
@@ -94,9 +95,7 @@ function PokemonCard(props) {
                 size="medium"                
                 startIcon={<InfoIcon />}
                 onClick={props.goToPokemonDetailsPage}
-                >VER DETALHES</Button>
-                {/* <Botoes onClick={props.Add}>Adicionar a Pokédex</Botoes>
-                <Botoes onClick={props.goToPokemonDetailsPage}>Ver detalhes</Botoes>  */}
+                >VER DETALHES</Button>                
             </ContainerBotoes>
         </ContainerCard>
     );

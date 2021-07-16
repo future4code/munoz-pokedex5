@@ -18,25 +18,7 @@ const FullPage = styled.div`
     flex-direction: column;
     align-items: center;
 `
-const Header = styled.header`
-    width: 100%;
-    height: 8vh;
-    align-items: center;
-    display: flex;
-    background-color: red;
-    justify-content: center;
-`
-const BotoesDiv = styled.div`
-   display: flex;
-   justify-content: center;
-   width: 26vh;
 
-`
-const TituloDiv = styled.div`
-   display: flex;
-   justify-content: center;
-   flex-grow: 1;
-`
 
 const ContainerCard = styled.div`
    display: grid;
@@ -102,14 +84,14 @@ function PokedexPage() {
 
     const {states, setters} = useGlobalContext()
 
-    const history = useHistory();
+    const history = useHistory()
 
     const excluirDaPokedex = (pok) => {
         const arrayExcluir = states.pokedex.filter((poke) => {
             if (poke.name === pok) {
-              return false;
+              return false
             } else {
-              return true;
+              return true
             }
           })
           setters.setPokedex(arrayExcluir)
@@ -119,53 +101,37 @@ function PokedexPage() {
     return(
         <FullPage>
             <>
-            <AppBar position="static">
-            <Toolbar>
-                <HeaderContainer>
-                    <Fab variant="extended" size="medium" onClick = {() => goToHomePage(history)} >
-                        <KeyboardReturnIcon />
-                            VOLTAR A LISTA
-                    </Fab>
-                    <Typography variant="h4" >
-                        POKEDEX
-                    </Typography>
-            
+                <AppBar position="static">
+                    <Toolbar>
+                        <HeaderContainer>
+                            <Fab variant="extended" size="medium" onClick = {() => goToHomePage(history)} >
+                                <KeyboardReturnIcon />
+                                    VOLTAR A LISTA
+                            </Fab>
+                            <Typography variant="h4" >
+                                PoKeDeX
+                            </Typography>                            
+                        </HeaderContainer>
+                    </Toolbar>                   
+                </AppBar>
+              
+
+                <ContainerCard>
+                    {states.pokedex.map((poke) => {
+                        return <>
+                                    <ContainerCardPoke key={poke.name} >    
+                                        <ImagemContainer>
+                                            <Img src={poke.sprites.front_default}></Img>
+                                        </ImagemContainer>
+                                        <ContainerBotoes>
+                                            <Botoes onClick={() => excluirDaPokedex(poke.name)}>Remover da Pokédex</Botoes>
+                                            <Botoes onClick={() => goToPokemonDetailsPage(history, poke.name)}>Ver detalhes</Botoes>
+                                        </ContainerBotoes>
+                                    </ContainerCardPoke> 
                     
-                </HeaderContainer>
-            </Toolbar>
-            
-                
-        </AppBar>
-                {/* <Header>
-                  <BotoesDiv> 
-                  <button onClick = {() => goToHomePage(history)}>Voltar para lista de pokemons</button>
-                  </BotoesDiv>
-
-                  <TituloDiv> 
-                      <h1>Pokedex</h1>
-                  </TituloDiv>
-                </Header> */}
-
-            <ContainerCard>
-
-                {states.pokedex.map((poke) => {
-                     return <>
-                        <ContainerCardPoke key={poke.name} >    
-                            <ImagemContainer>
-                                <Img src={poke.sprites.front_default}></Img>
-                            </ImagemContainer>
-                            <ContainerBotoes>
-                                    <Botoes onClick={() => excluirDaPokedex(poke.name)}>Remover da Pokédex</Botoes>
-                                    <Botoes onClick={() => goToPokemonDetailsPage(history, poke.name)}>Ver detalhes</Botoes>
-                            </ContainerBotoes>
-                        </ContainerCardPoke> 
-                
-                    </>
-        
-                })}
-
-            </ContainerCard>
-                
+                                </>            
+                    })}
+                </ContainerCard>                
 
             </>
         </FullPage>

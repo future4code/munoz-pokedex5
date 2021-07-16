@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../Components/Header';
-import PokemonCard from '../Components/PokemonCards';
-import styled from 'styled-components';
+import Header from '../Components/Header'
+import PokemonCard from '../Components/PokemonCards'
+import styled from 'styled-components'
 import './StyleReset/ResetCss.css'
-import { useHistory } from 'react-router-dom';
-import { goToHomePage, goToPokedexPage, goToPokemonDetailsPage } from '../routes/coordinator';
+import { useHistory } from 'react-router-dom'
+import { goToHomePage, goToPokedexPage, goToPokemonDetailsPage } from '../routes/coordinator'
 import { BASE_URL } from '../constantes/urls'
 import axios from 'axios'
-import Pagination from '@material-ui/lab/Pagination';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-
-
+import Pagination from '@material-ui/lab/Pagination'
 import { useGlobalContext } from '../global/GlobalContext'
+import LinearProgress from '@material-ui/core/LinearProgress';
+
 
 const FullPage = styled.div`
   width: 100vw;
@@ -21,7 +19,7 @@ const FullPage = styled.div`
   flex-direction: column;
   align-items: center;
   font-family: Arial;
-`;
+`
 
 const ContainerCard = styled.div`
   display: grid;
@@ -35,11 +33,9 @@ const ContainerCard = styled.div`
     justify-content: start;
     align-items: center;
   };
-`;
+`
 
 const Paginacao = styled.div`
-
-
 `
 
 function HomePage() {
@@ -47,8 +43,8 @@ function HomePage() {
   const [pokeNomes, setPokeNomes] = useState([])
   const [pokemons, setPokemons] = useState([])
   const { states, setters } = useGlobalContext()
-  const history = useHistory();
-  const [numeroPagina, setNumeroPagina] = useState(1);
+  const history = useHistory()
+  const [numeroPagina, setNumeroPagina] = useState(1)
   const [loading, setLoading] = useState(false)
 
 
@@ -61,40 +57,41 @@ function HomePage() {
  
 
   useEffect(() => {
-    getPokeNomes();
-  }, [numeroPagina]);
+    setLoading(true)
+    getPokeNomes()
+  }, [numeroPagina])
 
   useEffect(() => {
-    const novoArray = [];
+    const novoArray = []
     pokeNomes.forEach((poke) => {
       axios
         .get(`${BASE_URL}/pokemon/${poke.name}`)
         .then((response) => {
-          novoArray.push(response.data);
+          novoArray.push(response.data)
           if (novoArray.length === 20) {
             const orderedList = novoArray.sort((a, b) => {
-              return a.id - b.id;
+              return a.id - b.id
             })
             setPokemons(orderedList)
             setLoading(false)
           }
         })
-        .catch((error) => console.log(error.message));
-    });
-  }, [pokeNomes]);
+        .catch((error) => console.log(error.message))
+    })
+  }, [pokeNomes])
 
   const getPokeNomes = () => {
-    setLoading(true)
+    
     const offset = (numeroPagina - 1) * 20;
     axios
       .get(`${BASE_URL}/pokemon/?limit=20&offset=${offset}`)
       .then((response) => {
-        setPokeNomes(response.data.results);
+        setPokeNomes(response.data.results)
         setLoading(false)
-      });
+      })
       
   
-  };
+  }
 
   const pegaPokemonOnClick = (poke) => {
 
@@ -131,8 +128,8 @@ function HomePage() {
         onClickLeftButton={() => goToHomePage(history)}
         onClickRightButton={() => goToPokedexPage(history)}
       />
-      {loading ? <CircularProgress />
-         :  <ContainerCard>
+      {loading ? <p>CARREGANDO...<LinearProgress size={40} thickness={10} variant="determinate"  /></p> :  
+      <ContainerCard>
         {filtered.map((value) => {
           return (
             <PokemonCard
@@ -142,13 +139,13 @@ function HomePage() {
               PokePhoto={value.sprites.front_default}
               goToPokemonDetailsPage={() => goToPokemonDetailsPage(history, value.name)}
             />)
-        })}
-
-      
+        })}      
       </ContainerCard>}
-      {loading ? <p>CARREGANDO...</p> : <Paginacao>
-      <Pagination count={256} variant="outlined" color="primary" onChange={onChangePagina} />
-      </Paginacao>}
+
+      <Paginacao>
+       <Pagination count={256}  color="primary" onChange={onChangePagina} />
+      </Paginacao>
+
     </FullPage>
   );
 }

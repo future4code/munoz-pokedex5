@@ -20,45 +20,22 @@ const HeaderContainer = styled.header`
         height: 18vh;
     };
     
-`;
+`
 
-const BotoesDiv = styled.div`
-   display: flex;
-   justify-content: center;
-`;
 
-/* const Button = styled.button`
-    padding: 0.5em 0.8em;
-    border-radius: 0.6em;
-    font-size: 18px;
-    background-color: white;
-    border: 1px solid black;
-    @media (max-width: 375px) {
-        font-size: 14px;
-    };
-    @media (max-width: 1300px) {
-        font-size: 16px;
-    };
-    &: hover {
-        cursor: pointer;
-        background-color: black;
-        border: 1px solid white;
-        color: whitesmoke;
-    };
-`; */
+
+
 
 function Header(props) {
 
-    return (
-        
-        
+    return (       
         
         <AppBar position="static">
             <Toolbar>
                 <HeaderContainer>
                     <Fab variant="extended" size="medium"  onClick={props.onClickLeftButton}>
                         <HomeIcon />
-                            HOME
+                        {props.leftButton}
                     </Fab>
                     <Typography variant="h4" >
                         POKEMONS
@@ -66,23 +43,13 @@ function Header(props) {
             
                     <Fab variant="extended" size="medium"  onClick={props.onClickRightButton}>
                         <FormatListBulletedIcon />
-                            POKEDÉX
+                        {props.rightButton}
                     </Fab>
                 </HeaderContainer>
-            </Toolbar>
-            
-                
-        </AppBar>
-            
-           /*  <BotoesDiv>
-                <Button onClick={props.onClickLeftButton}>{props.leftButton}</Button>
-            </BotoesDiv> */
-            
-            /* <BotoesDiv>
-                <Button onClick={props.onClickRightButton}>{props.rightButton}</Button>
-            </BotoesDiv> */
-        
-        )
+            </Toolbar>               
+        </AppBar>            
+                   
+    )
 };
 
 export default Header;
