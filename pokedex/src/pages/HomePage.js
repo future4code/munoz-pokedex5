@@ -7,6 +7,10 @@ import { useHistory } from 'react-router-dom';
 import { goToHomePage, goToPokedexPage, goToPokemonDetailsPage } from '../routes/coordinator';
 import { BASE_URL } from '../constantes/urls'
 import axios from 'axios'
+import Pagination from '@material-ui/lab/Pagination';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+
 
 import { useGlobalContext } from '../global/GlobalContext'
 
@@ -33,18 +37,32 @@ const ContainerCard = styled.div`
   };
 `;
 
+const Paginacao = styled.div`
+
+
+`
+
 function HomePage() {
 
   const [pokeNomes, setPokeNomes] = useState([])
   const [pokemons, setPokemons] = useState([])
-
   const { states, setters } = useGlobalContext()
-
   const history = useHistory();
+  const [numeroPagina, setNumeroPagina] = useState(1);
+  const [loading, setLoading] = useState(false)
+
+
+  const onChangePagina = (event, value) => {
+    setNumeroPagina(value)
+  }
+
+  
+
+ 
 
   useEffect(() => {
     getPokeNomes();
-  }, []);
+  }, [numeroPagina]);
 
   useEffect(() => {
     const novoArray = [];
@@ -58,6 +76,7 @@ function HomePage() {
               return a.id - b.id;
             })
             setPokemons(orderedList)
+            setLoading(false)
           }
         })
         .catch((error) => console.log(error.message));
@@ -65,12 +84,16 @@ function HomePage() {
   }, [pokeNomes]);
 
   const getPokeNomes = () => {
+    setLoading(true)
+    const offset = (numeroPagina - 1) * 20;
     axios
-      .get(`${BASE_URL}/pokemon?limit=20`)
+      .get(`${BASE_URL}/pokemon/?limit=20&offset=${offset}`)
       .then((response) => {
         setPokeNomes(response.data.results);
-      })
-      .catch((error) => console.log(error.message));
+        setLoading(false)
+      });
+      
+  
   };
 
   const pegaPokemonOnClick = (poke) => {
@@ -79,6 +102,8 @@ function HomePage() {
     setters.setPokedex(newArrayPokemon)
 
   }
+
+ 
 
   const filtered = pokemons.filter((poke) => {
     const estaNaPokedex = states.pokedex.find((mons) => {
@@ -97,14 +122,17 @@ function HomePage() {
   })
 
   return (
+    
     <FullPage>
+    
       <Header
         leftButton='HOME'
         rightButton='POKÉDEX'
         onClickLeftButton={() => goToHomePage(history)}
         onClickRightButton={() => goToPokedexPage(history)}
       />
-      <ContainerCard>
+      {loading ? <CircularProgress />
+         :  <ContainerCard>
         {filtered.map((value) => {
           return (
             <PokemonCard
@@ -115,7 +143,12 @@ function HomePage() {
               goToPokemonDetailsPage={() => goToPokemonDetailsPage(history, value.name)}
             />)
         })}
-      </ContainerCard>
+
+      
+      </ContainerCard>}
+      {loading ? <p>CARREGANDO...</p> : <Paginacao>
+      <Pagination count={256} variant="outlined" color="primary" onChange={onChangePagina} />
+      </Paginacao>}
     </FullPage>
   );
 }
