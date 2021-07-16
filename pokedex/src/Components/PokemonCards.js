@@ -1,6 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import '../pages/StyleReset/ResetCss.css'
+import Button from '@material-ui/core/Button';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import InfoIcon from '@material-ui/icons/Info';
+
 
 /*Componente de cards de Pokemons */
 
@@ -18,6 +22,7 @@ const ContainerCard = styled.div`
         align-items: center;
         height: 45vh;
     };
+    font-family: roboto;
 `;
 
 const ImagemContainer = styled.div`
@@ -30,14 +35,17 @@ const ImagemContainer = styled.div`
 
 const ContainerBotoes = styled.div`
     display: flex;
+    flex-direction: column;
     position: absolute;
     bottom: 0%;
-    justify-content: center;
-    width: 100%;
+    justify-content: space-between ;
+    width: 85%;
+    height: 10.2vh;
     margin-bottom: 0.5em;
     @media (max-width: 375px) {
         flex-direction: column;
         align-items: center;
+        height: 12vh;
     };
 `;
 
@@ -72,8 +80,23 @@ function PokemonCard(props) {
                 <Img src={props.PokePhoto}></Img>
             </ImagemContainer>
             <ContainerBotoes>
-                <Botoes onClick={props.Add}>Adicionar a Pokédex</Botoes>
-                <Botoes onClick={props.goToPokemonDetailsPage}>Ver detalhes</Botoes>
+                <Button
+                variant="contained"
+                color="primary"
+                size="medium"                
+                startIcon={<AddCircleIcon />}
+                onClick={props.Add}
+                >ADd A POKEDEX</Button>
+
+                <Button
+                variant="contained"
+                color="primary"
+                size="medium"                
+                startIcon={<InfoIcon />}
+                onClick={props.goToPokemonDetailsPage}
+                >VER DETALHES</Button>
+                {/* <Botoes onClick={props.Add}>Adicionar a Pokédex</Botoes>
+                <Botoes onClick={props.goToPokemonDetailsPage}>Ver detalhes</Botoes>  */}
             </ContainerBotoes>
         </ContainerCard>
     );
