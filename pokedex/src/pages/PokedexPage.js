@@ -4,8 +4,12 @@ import './StyleReset/ResetCss.css'
 import { useHistory } from 'react-router-dom';
 import { goToHomePage } from '../routes/coordinator';
 import { goToPokemonDetailsPage } from '../routes/coordinator';
-
 import { useGlobalContext } from '../global/GlobalContext'
+import Fab from '@material-ui/core/Fab';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 
 const FullPage = styled.div`
     width: 100vw;
@@ -79,6 +83,20 @@ const Botoes = styled.button`
     padding: 0px 10px 0px 10px;
 `
 
+const HeaderContainer = styled.header`
+    width: 55%;
+    height: 8%;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    @media (max-width: 375px) {
+        flex-direction: column;
+        align-items: center;
+        height: 18vh;
+    };
+    
+`;
+
 
 function PokedexPage() {
 
@@ -101,7 +119,24 @@ function PokedexPage() {
     return(
         <FullPage>
             <>
-                <Header>
+            <AppBar position="static">
+            <Toolbar>
+                <HeaderContainer>
+                    <Fab variant="extended" size="medium" onClick = {() => goToHomePage(history)} >
+                        <KeyboardReturnIcon />
+                            VOLTAR A LISTA
+                    </Fab>
+                    <Typography variant="h4" >
+                        POKEDEX
+                    </Typography>
+            
+                    
+                </HeaderContainer>
+            </Toolbar>
+            
+                
+        </AppBar>
+                {/* <Header>
                   <BotoesDiv> 
                   <button onClick = {() => goToHomePage(history)}>Voltar para lista de pokemons</button>
                   </BotoesDiv>
@@ -109,7 +144,7 @@ function PokedexPage() {
                   <TituloDiv> 
                       <h1>Pokedex</h1>
                   </TituloDiv>
-                </Header>
+                </Header> */}
 
             <ContainerCard>
 
