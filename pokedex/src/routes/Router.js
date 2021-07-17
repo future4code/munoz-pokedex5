@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import HomePage from '../pages/HomePage';
 import PokedexPage from '../pages/PokedexPage';
 import PokemonDetailsPage from '../pages/PokemonDetailsPage';
+import Batalha from '../pages/Batalha';
 
 
 function Router() {
@@ -18,6 +19,9 @@ function Router() {
                 </Route>
                 <Route exact path='/pokemon/:name'>
                     <PokemonDetailsPage />
+                </Route>
+                <Route exact path='/batalha'>
+                    <Batalha />
                 </Route>
             </Switch>
         </BrowserRouter>

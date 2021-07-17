@@ -36,6 +36,7 @@ const ContainerCard = styled.div`
 `
 
 const Paginacao = styled.div`
+
 `
 
 function HomePage() {
@@ -151,4 +152,3 @@ function HomePage() {
 }
 
 export default HomePage;
-

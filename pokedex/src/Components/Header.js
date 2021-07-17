@@ -28,8 +28,7 @@ const HeaderContainer = styled.header`
 
 function Header(props) {
 
-    return (       
-        
+    return (
         <AppBar position="static">
             <Toolbar>
                 <HeaderContainer>
@@ -46,10 +45,13 @@ function Header(props) {
                         {props.rightButton}
                     </Fab>
                 </HeaderContainer>
-            </Toolbar>               
-        </AppBar>            
-                   
-    )
+            </Toolbar>
+
+        </AppBar>
+
+        
+        )
+
 };
 
 export default Header;
