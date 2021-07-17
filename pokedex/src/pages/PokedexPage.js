@@ -2,14 +2,16 @@ import React, {useContext} from 'react';
 import styled from 'styled-components';
 import './StyleReset/ResetCss.css'
 import { useHistory } from 'react-router-dom';
-import { goToHomePage, goToPokemonDetailsPage, goToBattlePage} from '../routes/coordinator';
+import {goToHomePage, goToPokemonDetailsPage, goToBattlePage  } from '../routes/coordinator';
 import { useGlobalContext } from '../global/GlobalContext'
 import Fab from '@material-ui/core/Fab';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
-
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/AddCircle';
+import InfoIcon from '@material-ui/icons/Info';
 
 const FullPage = styled.div`
     width: 100vw;
@@ -18,14 +20,14 @@ const FullPage = styled.div`
     flex-direction: column;
     align-items: center;
 `
-// const Header = styled.header`
-//     width: 100%;
-//     height: 8vh;
-//     align-items: center;
-//     display: flex;
-//     background-color: red;
-//     justify-content: center;
-// `
+const Header = styled.header`
+    width: 100%;
+    height: 8vh;
+    align-items: center;
+    display: flex;
+    background-color: red;
+    justify-content: center;
+`
 const BotoesDiv = styled.div`
    display: flex;
    justify-content: center;
@@ -39,13 +41,22 @@ const TituloDiv = styled.div`
 `
 
 const ContainerCard = styled.div`
-   display: grid;
-   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-   grid-row-gap: 10px;
-   column-gap: 35px;
-   margin: 10px 10px 10px 0px;
-`
-const ContainerCardPoke = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: whitesmoke;
+    position: relative;
+    border: 1px solid black;
+    border-radius: 25px;
+    @media (max-width: 375px) {
+        width: 60vw;
+        align-items: center;
+        height: 45vh;
+    };
+    font-family: roboto;
+`;
+/* const ContainerCardPoke = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -53,7 +64,18 @@ const ContainerCardPoke = styled.div`
     background-color: rgb(240, 238, 238);
     width: 100%;
     position: relative;
-`
+` */
+const PokeName = styled.div`
+    margin-top: 1em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bold;
+    @media (max-width: 375px) {
+        font-size: 22px;
+    };
+`;
 
 const ImagemContainer = styled.div`
     width: 17vw;
@@ -71,11 +93,19 @@ const Img = styled.img`
 
 const ContainerBotoes = styled.div`
     display: flex;
+    flex-direction: column;
     position: absolute;
     bottom: 0%;
-    width: 100%;
-    justify-content: center;
-`
+    justify-content: space-between ;
+    width: 85%;
+    height: 10.2vh;
+    margin-bottom: 0.5em;
+    @media (max-width: 375px) {
+        flex-direction: column;
+        align-items: center;
+        height: 12vh;
+    };
+`;
 
 const Botoes = styled.button`
     width: 100%;
@@ -97,6 +127,19 @@ const HeaderContainer = styled.header`
     };
 `;
 
+const ContainerCardPoke = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-row-gap: 10px;
+  column-gap: 35px;
+  margin: 10px 10px 10px 0px;
+  @media(max-width: 375px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+  };
+`
 
 function PokedexPage() {
 
@@ -119,25 +162,23 @@ function PokedexPage() {
     return(
         <FullPage>
             <>
-            <AppBar position="static">
-            <Toolbar>
-                <HeaderContainer>
-                    <Fab variant="extended" size="medium" onClick = {() => goToHomePage(history)} >
-                        <KeyboardReturnIcon />
-                            VOLTAR A LISTA
-                    </Fab>
-                    <Typography variant="h4" >
-                        POKEDEX
-                    </Typography>
-              
-                    <Fab variant="extended" size="medium" onClick = {() => goToBattlePage(history)}>
-                        BATALHA
-                    </Fab>
-                </HeaderContainer>
-            </Toolbar>
-            
-                
-        </AppBar>
+                <AppBar position="static">
+                    <Toolbar>
+                        <HeaderContainer>
+                            <Fab variant="extended" size="medium" onClick = {() => goToHomePage(history)} >
+                                <KeyboardReturnIcon />
+                                    VOLTAR A LISTA
+                            </Fab>
+                            <Typography variant="h4" >
+                                POKEDEX
+                            </Typography>
+
+                            <Fab variant="extended" size="medium" onClick = {() => goToBattlePage(history)}>
+                                BATALHA
+                            </Fab>
+                        </HeaderContainer>
+                    </Toolbar>               
+                </AppBar>
                 {/* <Header>
                   <BotoesDiv> 
                   <button onClick = {() => goToHomePage(history)}>Voltar para lista de pokemons</button>
@@ -148,25 +189,34 @@ function PokedexPage() {
                   </TituloDiv>
                 </Header> */}
 
-            <ContainerCard>
-
-                {states.pokedex.map((poke) => {
-                     return <>
-                        <ContainerCardPoke key={poke.name} >    
-                            <ImagemContainer>
-                                <Img src={poke.sprites.front_default}></Img>
-                            </ImagemContainer>
-                            <ContainerBotoes>
-                                    <Botoes onClick={() => excluirDaPokedex(poke.name)}>Remover da Pokédex</Botoes>
-                                    <Botoes onClick={() => goToPokemonDetailsPage(history, poke.name)}>Ver detalhes</Botoes>
-                            </ContainerBotoes>
-                        </ContainerCardPoke> 
-                
-                    </>
-        
-                })}
-
-            </ContainerCard>
+                <ContainerCardPoke>                
+                     {states.pokedex.map((poke) => {
+                        return <ContainerCard key={poke.name}>
+                            <PokeName>{poke.name}</PokeName>
+                                <ImagemContainer>
+                                    <Img src={poke.sprites.front_default}></Img>
+                                </ImagemContainer>
+                                        
+                                <ContainerBotoes>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="medium"                
+                                        startIcon={<DeleteIcon />}
+                                        onClick={() => excluirDaPokedex(poke.name)}
+                                        >EXCLUIR</Button>
+                                        
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="medium"                
+                                        startIcon={<InfoIcon />}
+                                        onClick={() => goToPokemonDetailsPage(history, poke.name)}
+                                        >VER DETALHES</Button>                
+                                </ContainerBotoes>
+                            </ContainerCard>        
+                                    })}
+                </ContainerCardPoke> 
                 
 
             </>
