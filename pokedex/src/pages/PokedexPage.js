@@ -18,6 +18,7 @@ const FullPage = styled.div`
     flex-direction: column;
     align-items: center;
 `
+
 // const Header = styled.header`
 //     width: 100%;
 //     height: 8vh;
@@ -31,12 +32,7 @@ const BotoesDiv = styled.div`
    justify-content: center;
    width: 26vh;
 
-`
-const TituloDiv = styled.div`
-   display: flex;
-   justify-content: center;
-   flex-grow: 1;
-`
+
 
 const ContainerCard = styled.div`
    display: grid;
@@ -102,14 +98,14 @@ function PokedexPage() {
 
     const {states, setters} = useGlobalContext()
 
-    const history = useHistory();
+    const history = useHistory()
 
     const excluirDaPokedex = (pok) => {
         const arrayExcluir = states.pokedex.filter((poke) => {
             if (poke.name === pok) {
-              return false;
+              return false
             } else {
-              return true;
+              return true
             }
           })
           setters.setPokedex(arrayExcluir)
@@ -119,6 +115,7 @@ function PokedexPage() {
     return(
         <FullPage>
             <>
+
             <AppBar position="static">
             <Toolbar>
                 <HeaderContainer>
@@ -167,7 +164,6 @@ function PokedexPage() {
                 })}
 
             </ContainerCard>
-                
 
             </>
         </FullPage>
