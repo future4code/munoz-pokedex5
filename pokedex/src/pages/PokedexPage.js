@@ -2,14 +2,14 @@ import React, {useContext} from 'react';
 import styled from 'styled-components';
 import './StyleReset/ResetCss.css'
 import { useHistory } from 'react-router-dom';
-import { goToHomePage, goToPokemonDetailsPage, goToBattlePage} from '../routes/coordinator';
+import { goToHomePage } from '../routes/coordinator';
+import { goToPokemonDetailsPage } from '../routes/coordinator';
 import { useGlobalContext } from '../global/GlobalContext'
 import Fab from '@material-ui/core/Fab';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
-
 
 const FullPage = styled.div`
     width: 100vw;
@@ -18,21 +18,25 @@ const FullPage = styled.div`
     flex-direction: column;
     align-items: center;
 `
-
-// const Header = styled.header`
-//     width: 100%;
-//     height: 8vh;
-//     align-items: center;
-//     display: flex;
-//     background-color: red;
-//     justify-content: center;
-// `
+const Header = styled.header`
+    width: 100%;
+    height: 8vh;
+    align-items: center;
+    display: flex;
+    background-color: red;
+    justify-content: center;
+`
 const BotoesDiv = styled.div`
    display: flex;
    justify-content: center;
    width: 26vh;
 
-
+`
+const TituloDiv = styled.div`
+   display: flex;
+   justify-content: center;
+   flex-grow: 1;
+`
 
 const ContainerCard = styled.div`
    display: grid;
@@ -80,17 +84,17 @@ const Botoes = styled.button`
 `
 
 const HeaderContainer = styled.header`
-   width: 100%;
-   height: 8%;
-   align-items: center;
-   display: flex;
-   justify-content: space-around;
-
-      @media (max-width: 375px) {
+    width: 55%;
+    height: 8%;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    @media (max-width: 375px) {
         flex-direction: column;
         align-items: center;
         height: 18vh;
     };
+    
 `;
 
 
@@ -98,14 +102,14 @@ function PokedexPage() {
 
     const {states, setters} = useGlobalContext()
 
-    const history = useHistory()
+    const history = useHistory();
 
     const excluirDaPokedex = (pok) => {
         const arrayExcluir = states.pokedex.filter((poke) => {
             if (poke.name === pok) {
-              return false
+              return false;
             } else {
-              return true
+              return true;
             }
           })
           setters.setPokedex(arrayExcluir)
@@ -115,7 +119,6 @@ function PokedexPage() {
     return(
         <FullPage>
             <>
-
             <AppBar position="static">
             <Toolbar>
                 <HeaderContainer>
@@ -126,10 +129,8 @@ function PokedexPage() {
                     <Typography variant="h4" >
                         POKEDEX
                     </Typography>
-              
-                    <Fab variant="extended" size="medium" onClick = {() => goToBattlePage(history)}>
-                        BATALHA
-                    </Fab>
+            
+                    
                 </HeaderContainer>
             </Toolbar>
             
@@ -164,6 +165,7 @@ function PokedexPage() {
                 })}
 
             </ContainerCard>
+                
 
             </>
         </FullPage>
