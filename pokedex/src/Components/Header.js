@@ -50,9 +50,6 @@ const BotoesDiv = styled.div`
 function Header(props) {
 
     return (
-        
-        
-        
         <AppBar position="static">
             <Toolbar>
                 <HeaderContainer>
@@ -70,17 +67,9 @@ function Header(props) {
                     </Fab>
                 </HeaderContainer>
             </Toolbar>
-            
-                
+
         </AppBar>
-            
-           /*  <BotoesDiv>
-                <Button onClick={props.onClickLeftButton}>{props.leftButton}</Button>
-            </BotoesDiv> */
-            
-            /* <BotoesDiv>
-                <Button onClick={props.onClickRightButton}>{props.rightButton}</Button>
-            </BotoesDiv> */
+
         
         )
 };
