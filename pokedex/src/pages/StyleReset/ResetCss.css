@@ -3,4 +3,31 @@
   padding: 0;
 }
 
+.divlado {
+  display: flex;
+  justify-content: center;
+  width: 84vw;
+  height: 90vh;
+}
+
+.cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contUm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 30%;
+}
+.contDo {
+  background-color: rgb(240, 238, 238);
+}
+
+.contTre {
+  width: 10vw;
+}
 /* fiz esse reset aqui pois não consegui fazer usando o styled */
