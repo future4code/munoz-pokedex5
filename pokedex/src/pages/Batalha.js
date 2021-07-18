@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import Header from '../Components/Header'
 import styled from 'styled-components';
 import { useGlobalContext } from '../global/GlobalContext'
+import { useHistory } from 'react-router';
+import { goToHomePage, goToPokedexPage, goToPokemonDetailsPage } from '../routes/coordinator'
+import HomeIcon from '@material-ui/icons/Home';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
 const FullPage = styled.div`
   width: 100vw;
@@ -11,20 +15,7 @@ const FullPage = styled.div`
   font-family: Arial;
 `;
 
-const HeaderContainer = styled.header`
-   width: 100%;
-   height: 8%;
-   align-items: center;
-   display: flex;
-   justify-content: space-around;
-   background-color: blue;
 
-      @media (max-width: 375px) {
-        flex-direction: column;
-        align-items: center;
-        height: 18vh;
-    };
-`;
 
 const ContainerCard = styled.div`
   display: flex;
@@ -60,7 +51,7 @@ const Img = styled.img`
 `
 
 
-function Batalha () {
+function Batalha (props) {
 
   const [arrayPokeBattle, setArrayPokeBattle] = useState([])
 
@@ -72,15 +63,25 @@ function Batalha () {
 
     setArrayPokeBattle(newArrayPokemon)
   }
+
+  const history = useHistory()
+  
  
 
   console.log(arrayPokeBattle)
 
   return (
       <FullPage>
-        <HeaderContainer>
-          <h1>Olá eae</h1>
-        </HeaderContainer>
+        <Header
+          titlePage='POKE BATTLE'
+          leftButton='VOLTAR PARA HOME'
+          leftIcon={<HomeIcon />}
+          rightButton='POKEDEX'
+          rightIcon={<FormatListBulletedIcon/>}
+          onClickLeftButton={() => goToHomePage(history)}
+          onClickRightButton={() => goToPokedexPage(history)}
+        ></Header>
+        
 
       <div className="cont"> 
         <ContainerCard>
