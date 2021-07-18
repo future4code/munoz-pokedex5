@@ -24,8 +24,6 @@ const HeaderContainer = styled.header`
 
 
 
-
-
 function Header(props) {
 
     return (
@@ -33,15 +31,15 @@ function Header(props) {
             <Toolbar>
                 <HeaderContainer>
                     <Fab variant="extended" size="medium"  onClick={props.onClickLeftButton}>
-                        <HomeIcon />
+                         {props.leftIcon}
                         {props.leftButton}
                     </Fab>
                     <Typography variant="h4" >
-                        POKEMONS
+                        {props.titlePage}
                     </Typography>
             
                     <Fab variant="extended" size="medium"  onClick={props.onClickRightButton}>
-                        <FormatListBulletedIcon />
+                        {props.rightIcon}
                         {props.rightButton}
                     </Fab>
                 </HeaderContainer>

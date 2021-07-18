@@ -2,8 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import '../pages/StyleReset/ResetCss.css'
 import Button from '@material-ui/core/Button';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import InfoIcon from '@material-ui/icons/Info';
+
 
 
 /*Componente de cards de Pokemons */
@@ -49,10 +48,7 @@ const ContainerBotoes = styled.div`
     };
 `;
 
-const Botoes = styled.button`
-    height: 40px;
-    width: 45%;
-`;
+
 const Img = styled.img`
     height: 60%;
     align-items: center; 
@@ -75,7 +71,7 @@ function PokemonCard(props) {
 
     return (
         <ContainerCard >
-            <PokeName>{props.pokeName}</PokeName>
+            <PokeName>{props.PokeName}</PokeName>
             <ImagemContainer>
                 <Img src={props.PokePhoto}></Img>
             </ImagemContainer>
@@ -85,17 +81,17 @@ function PokemonCard(props) {
                 variant="contained"
                 color="primary"
                 size="medium"                
-                startIcon={<AddCircleIcon />}
-                onClick={props.Add}
-                >ADD A POKEDEX</Button>
+                startIcon={props.IconUp}
+                onClick={props.OnUp}
+                >{props.UpButton}</Button>
 
                 <Button
                 variant="contained"
                 color="primary"
                 size="medium"                
-                startIcon={<InfoIcon />}
-                onClick={props.goToPokemonDetailsPage}
-                >VER DETALHES</Button>                
+                startIcon={props.IconDow}
+                onClick={props.OnDow}
+                >{props.DowButton}</Button>                
             </ContainerBotoes>
         </ContainerCard>
     );
