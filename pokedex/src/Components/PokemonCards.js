@@ -5,32 +5,51 @@ import Button from '@material-ui/core/Button';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import InfoIcon from '@material-ui/icons/Info';
 
-
 /*Componente de cards de Pokemons */
 
 const ContainerCard = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    background-color: whitesmoke;
-    position: relative;
-    border: 1px solid black;
-    border-radius: 25px;
-    @media (max-width: 375px) {
-        width: 60vw;
-        align-items: center;
-        height: 45vh;
-    };
-    font-family: roboto;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: center;
+background-color: whitesmoke;
+position: relative;
+border: 1px solid black;
+border-radius: 25px;
+font-family: roboto;
+
+@media(max-width: 1075px) {
+    width: 30vw;
+    height: 40vh;
+  };
+
+  @media(max-width: 575px) {
+    width: 40vw;
+    height: 30vh;
+  };
+
+  @media(max-width: 775px) {
+    width: 40vw;
+    height: 30vh;
+  };
+
+  @media (max-width: 375px) {
+    width: 40vw;
+    height: 30vh;
+  };
 `;
 
 const ImagemContainer = styled.div`
-    width: 17vw;
-    height: 40vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 17vw;
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    @media (max-width: 375px) {
+        width: 27vw;
+        height: 100vh;
+        margin-bottom: 10px;
+    }
 `;
 
 const ContainerBotoes = styled.div`
@@ -60,21 +79,25 @@ const Img = styled.img`
 `;
 
 const PokeName = styled.div`
-    margin-top: 1em;
-    text-transform: uppercase;
-    display: flex;
-    justify-content: center;
-    font-size: 30px;
-    font-weight: bold;
-    @media (max-width: 375px) {
-        font-size: 22px;
-    };
+  margin-top: 1em;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+@media (max-width: 1118px) {
+     
+      margin: 10px 10px 0px 10px;
+      font-size: 20px;
+    
+  }
 `;
 
 function PokemonCard(props) {
 
     return (
-        <ContainerCard >
+        <ContainerCard>
             <PokeName>{props.pokeName}</PokeName>
             <ImagemContainer>
                 <Img src={props.PokePhoto}></Img>
@@ -89,7 +112,7 @@ function PokemonCard(props) {
                 onClick={props.Add}
                 >ADD A POKEDEX</Button>
 
-                <Button
+                <Button 
                 variant="contained"
                 color="primary"
                 size="medium"                
