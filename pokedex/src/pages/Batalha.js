@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Header from '../Components/Header'
 import styled from 'styled-components';
 import { useGlobalContext } from '../global/GlobalContext'
 import { useHistory } from 'react-router';
