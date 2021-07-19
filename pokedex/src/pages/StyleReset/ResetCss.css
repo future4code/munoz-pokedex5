@@ -2,58 +2,5 @@
   margin: 0;
   padding: 0;
 }
+/* fiz esse reset aqui pois não consegui fazer usando o styled */
 
-.divlado {
-  display: flex;
-  justify-content: center;
-  width: 84vw;
-  height: 90vh;
-}
-
-.cont {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.contUm {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 30%;
-}
-.contDo {
-  background-color: rgb(240, 238, 238);
-}
-
-.contTre {
-  width: 10vw;
-}
-
-.ContainerCardHome {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: whitesmoke;
-  position: relative;
-  border: 1px solid black;
-  border-radius: 25px;
-  font-family: roboto;
-}
-
-@media (max-width: 1118px) {
-}
-
-@media (max-width: 944px) {
-}
-
-@media (max-width: 860px) {
-}
-
-@media (max-width: 700px) {
-}
-
-@media (max-width: 375px) {
-} ;

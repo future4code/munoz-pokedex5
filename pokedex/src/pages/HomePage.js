@@ -10,6 +10,11 @@ import axios from 'axios'
 import Pagination from '@material-ui/lab/Pagination'
 import { useGlobalContext } from '../global/GlobalContext'
 import LinearProgress from '@material-ui/core/LinearProgress';
+import HomeIcon from '@material-ui/icons/Home';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import InfoIcon from '@material-ui/icons/Info';
+
 
 
 const FullPage = styled.div`
@@ -144,8 +149,11 @@ function HomePage() {
     <FullPage>
     
       <Header
+        titlePage='POKEMONS'
         leftButton='HOME'
+        leftIcon={<HomeIcon />}
         rightButton='POKÉDEX'
+        rightIcon={<FormatListBulletedIcon />}
         onClickLeftButton={() => goToHomePage(history)}
         onClickRightButton={() => goToPokedexPage(history)}
       />
@@ -155,11 +163,15 @@ function HomePage() {
           return (
             <PokemonCard
               key={value.id}
-              Add={() => pegaPokemonOnClick(value)}
-              pokeName={value.name}
+              PokeName={value.name}
               PokePhoto={value.sprites.front_default}
-              goToPokemonDetailsPage={() => goToPokemonDetailsPage(history, value.name)}
-            />)
+              UpButton='ADD A POKEDEX'
+              OnUp={() => pegaPokemonOnClick(value)} 
+              IconUp={<AddCircleIcon/>}
+              DowButton='DETALHES'            
+              OnDow={() => goToPokemonDetailsPage(history, value.name)}
+              IconDow={<InfoIcon/>}           
+              />)
         })}      
       </ContainerCardHome>}
 
