@@ -33,10 +33,10 @@ const InfoContainer = styled.div`
         background-color: white;
         align-items: normal;
         justify-content: center;
-    }
+    };
     @media (min-width: 720px) {
         height: 100%;
-    }
+    };
 `;
 
 const CardImgs = styled.img`
@@ -45,7 +45,7 @@ const CardImgs = styled.img`
     @media (max-width: 375px) {
         flex-direction: column;
         width: 140px;
-    }
+    };
 `;
 
 const DetailsCard = styled.div`
@@ -67,7 +67,7 @@ const DetailsCard = styled.div`
     };
     @media (min-width: 720px) {
         margin-top: 15px;
-    }
+    };
 `;
 
 const PokeNameContainer = styled.div`
@@ -76,7 +76,7 @@ const PokeNameContainer = styled.div`
     @media (max-width: 375px) {
         margin-top: 1em;
         margin-bottom: 0.5em;
-    }
+    };
 `;
 
 const PokeInfo = styled.div`
@@ -89,7 +89,7 @@ const PokeInfo = styled.div`
         margin-bottom: 0px;
         font-size: 16px;
         margin: 0.8em 0;
-    }
+    };
 `;
 const PowerContainer = styled.div`
     display: flex;
@@ -98,7 +98,7 @@ const PowerContainer = styled.div`
     width: 100%;
     @media (max-width: 375px) {
         margin-bottom: 0px;
-    }
+    };
 `;
 const PokeTypeContainer = styled.div`
     display: flex;
@@ -111,7 +111,7 @@ const PokeTypeContainer = styled.div`
         margin-bottom: 0px;
         font-size: 13px;
         font-weight: bold;
-    }
+    };
 `;
 
 const PokeType = styled.div`
@@ -124,7 +124,7 @@ const PokeType = styled.div`
     ${pokeTypes};
     @media (max-width: 375px) {
         margin-bottom: 0px;
-    }
+    };
 `;
 
 const PokeImageContainer = styled.div`
@@ -138,7 +138,7 @@ const AbilitiesContainer = styled.div`
     margin-bottom: 1em;
     @media (max-width: 375px) {
         margin-bottom: 0px;
-    }
+    };
 `;
 
 const PokeAbilities = styled.div`
@@ -150,7 +150,7 @@ const PokeAbilities = styled.div`
         flex-direction: column;
         justify-content: center;
         align-items: center;
-    }
+    };
 `;
 
 const Ability = styled.div`
@@ -159,7 +159,7 @@ const Ability = styled.div`
     justify-content: space-between;
     @media (max-width: 375px) {
         margin-bottom: 0px;
-    }
+    };
 `;
 
 const AbilityIcon = styled.img`
@@ -195,7 +195,7 @@ function PokemonDetailsPage() {
             .catch((error) => {
                 console.log(error.response);
             })
-    }
+    };
 
     useEffect(() => {
         getPokemonDetails();
@@ -203,11 +203,11 @@ function PokemonDetailsPage() {
 
     return (
         <FullPage>
-            <Header 
-            leftButton = 'HOME'
-            rightButton = 'POKÉDEX'
-            onClickLeftButton = {() => goToHomePage(history)}
-            onClickRightButton = {() => goToPokedexPage(history)}
+            <Header
+                leftButton='HOME'
+                rightButton='POKÉDEX'
+                onClickLeftButton={() => goToHomePage(history)}
+                onClickRightButton={() => goToPokedexPage(history)}
             />
             {pokeDetails ? (
                 <InfoContainer>
@@ -221,8 +221,8 @@ function PokemonDetailsPage() {
                                 {pokeDetails.types.map((poke) => {
                                     return (
                                         <PokeType
-                                        key={poke.type.name}
-                                        type={poke.type.name}>
+                                            key={poke.type.name}
+                                            type={poke.type.name}>
                                             {pokeTypePT(poke.type.name)}
                                         </PokeType>)
                                 })}
@@ -266,10 +266,9 @@ function PokemonDetailsPage() {
                         <SpecialMovesContainer>
                             <PokeInfo>PODERES PRINCIPAIS</PokeInfo>
                             {pokeDetails.moves.slice(0, 5).map((poke) => {
-                                return <p key = {poke.move.name}>{poke.move.name}</p>
+                                return <p key={poke.move.name}>{poke.move.name}</p>
                             })}
                         </SpecialMovesContainer>
-
                     </DetailsCard>
                 </InfoContainer>)
                 : <div></div>
