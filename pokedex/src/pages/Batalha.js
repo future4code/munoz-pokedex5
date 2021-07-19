@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
+import Header from '../Components/Header'
 import { useGlobalContext } from '../global/GlobalContext'
 import { useHistory } from 'react-router';
 import { goToHomePage, goToPokedexPage, goToPokemonDetailsPage } from '../routes/coordinator'
