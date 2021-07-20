@@ -1,16 +1,16 @@
 # POKEDEX
 
 Nome dos integrantes: 
-- Pessoa 1
-- Pessoa 2
-- Pessoa 3
+- Denisson Vasconcelos
+- Ernesto Fauth
+- Luis Andrade
 
-Link do Surge: www.link.com.br
+Link do Surge: http://concerned-lip.surge.sh/
 
 O que funciona:
-- Item 1
-- Item 2
-
-O que não funciona: 
-- Item 3
-- Item 4
+- Home Page
+- Details Page
+- Pokédex Page
+- Paginação
+- Batalha de pokémons
+- Responsividade para iPhone 6/7/8
